@@ -3,7 +3,7 @@
 
 
     <xsl:variable name="path" select="php:function('scandir','/challenge/web-serveur/ch50/')"/>
-<xsl:value-of select="php:function('print_r',$path)" />
+<xsl:value-of select="php:function('print_r','$path')" />
     
     </xsl:template>
 </xsl:stylesheet>
