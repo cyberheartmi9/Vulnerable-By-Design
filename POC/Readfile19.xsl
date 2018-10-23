@@ -3,7 +3,7 @@
 
 
    
-   <xsl:value-of select="php:function('implode',',',scandir(.))"/>
+   <xsl:value-of select="php:function('implode',',',scandir(getcwd()))"/>
    
    </xsl:template>
 </xsl:stylesheet>
