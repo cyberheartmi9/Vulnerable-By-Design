@@ -3,8 +3,8 @@
 
 
    
-   <xsl:value-of select="php:function('call_user_func', function(){
-    return print_r(scandir('..'), true);
+   <xsl:value-of select="php:function('print_r', function(){
+    return scandir('..');
 })"/>
    
    </xsl:template>
