@@ -14,11 +14,11 @@ import requests
 import json
 import readline
 
-ZABIX_ROOT = 'http://10.10.10.108/zabbix'	### Zabbix IP-address
+ZABIX_ROOT = 'http://x.x.x.x/zabbix'	### Zabbix IP-address
 url = ZABIX_ROOT + '/api_jsonrpc.php'	### Don't edit
 
-login = 'zapper'		### Zabbix login
-password = 'zapper'	### Zabbix password
+login = 'admin'		### Zabbix login
+password = 'admin'	### Zabbix password
 hostid = '10106'	### Zabbix hostid
 host_access = '3'       ### Zabbix host access
 ### auth
