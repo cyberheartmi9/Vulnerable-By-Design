@@ -1,0 +1,7 @@
+Save yourself some time checking SUID bianaries and run these three commands
+```
+find / -type f \( -perm -2000 -o -perm -4000 \) -perm -001 -exec ls -ld {} \; 2>/dev/null | cut -d "/" -f 3- | rev | cut -d / -f 1 | rev > suid.txt
+curl https://gtfobins.github.io/#+suid | grep '#suid' | cut -d '/' -f 3 > suid2.txt
+ll -H $(grep -F -f suid.txt suid2.txt | xargs which)
+```
+If something pops go to https://gtfobins.github.io/#+suid and check it out.  Be sure to manually check the SUID bins if you don't get a hit.
